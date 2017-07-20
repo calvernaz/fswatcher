@@ -24,13 +24,13 @@ public class DirWatcherExploratotyTest {
 	@Test
 	public void should_filter_files_with_prefix() {
 		File[] files = prefixFilter();
-		assertThat(files != null ? files.length : 0, is(3));
+		assertThat(files != null ? files.length : 0, is(4));
 	}
 	
 	@Test
 	public void should_filter_files_and_retrieves_last_modified_times() {
 		LastModifiedFiles lmf = lastModifiedFiles(prefixFilter());
-		assertThat("Expected size 3", lmf, iterableWithSize(3));
+		assertThat("Expected size 4", lmf, iterableWithSize(4));
 		lmf.forEach(lastModifiedFile -> {
 			assertThat("Modified times are bigger than 0", lastModifiedFile.getModifiedTime(), is(not(0)));
 		});
