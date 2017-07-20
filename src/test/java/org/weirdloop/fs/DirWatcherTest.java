@@ -22,13 +22,13 @@ public class DirWatcherTest {
 	@Test
 	public void should_return_sensor_list() {
 		DirWatcher dw = new DirWatcher(new File("src/test/resources"), filter());
-		List<String> fnames = dw.lastModifiedFiles(hourAgo());
+		List<File> fnames = dw.lastModifiedFiles(hourAgo());
 		List<String> ids = normalize(fnames);
 		assertThat(ids, containsInAnyOrder("1234", "2345", "4567"));
 	}
 	
-	private List<String> normalize(List<String> fnames) {
-		return fnames.stream().map(s -> s.split("_")[0]).collect(Collectors.toList());
+	private List<String> normalize(List<File> fnames) {
+		return fnames.stream().map(s -> s.getName().split("_")[0]).collect(Collectors.toList());
 	}
 	
 	private FileFilter filter() {
