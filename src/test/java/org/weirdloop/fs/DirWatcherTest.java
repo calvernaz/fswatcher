@@ -1,5 +1,6 @@
 package org.weirdloop.fs;
 
+import java.io.File;
 import org.apache.commons.io.filefilter.PrefixFileFilter;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class DirWatcherTest {
 
 	@Test
 	public void should_return_sensor_list() {
-		DirWatcher dw = new DirWatcher("src/test/resources", filter());
+		DirWatcher dw = new DirWatcher(new File("src/test/resources"), filter());
 		List<String> fnames = dw.lastModifiedFiles(hourAgo());
 		List<String> ids = normalize(fnames);
 		assertThat(ids, containsInAnyOrder("1234", "2345", "4567"));

@@ -14,8 +14,8 @@ public class DirWatcher {
 	private final FileFilter filter;
 	private final File file;
 	
-	public DirWatcher(String path, FileFilter filter) {
-		this.file = new File(path);
+	public DirWatcher(File file, FileFilter filter) {
+		this.file = file;
 		this.filter = filter;
 	}
 	
