@@ -19,7 +19,7 @@ public class DirWatcher {
 		this.filter = filter;
 	}
 	
-	public List<String> lastModifiedFiles(Predicate<LastModifiedFile> pred) {
+	public List<File> lastModifiedFiles(Predicate<LastModifiedFile> pred) {
 		File[] files = file.listFiles(filter);
 		requireNonNull(files);
 		List<LastModifiedFile> modifiedFiles = Stream.of(files)

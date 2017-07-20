@@ -1,5 +1,6 @@
 package org.weirdloop.fs;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -17,10 +18,10 @@ public class LastModifiedFiles implements Iterable<LastModifiedFile> {
 		return lastModifiedFiles.iterator();
 	}
 	
-	public List<String> modifiedAfter(Predicate<LastModifiedFile> pred) {
+	public List<File> modifiedAfter(Predicate<LastModifiedFile> pred) {
 		return lastModifiedFiles.stream()
 				.filter(pred)
-				.map(lastModifiedFile -> lastModifiedFile.getFile().getName())
+				.map(LastModifiedFile::getFile)
 				.collect(Collectors.toList());
 	}
 }

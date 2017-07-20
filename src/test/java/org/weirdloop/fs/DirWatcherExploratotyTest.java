@@ -39,7 +39,7 @@ public class DirWatcherExploratotyTest {
 	@Test
 	public void should_detect_last_modified_files_hour_ago() {
 		LastModifiedFiles lmf = lastModifiedFiles(prefixFilter());
-		List<String> sensorids = lmf.modifiedAfter(hourAgo());
+		List<File> sensorids = lmf.modifiedAfter(hourAgo());
 		assertThat(sensorids, IsIterableWithSize.iterableWithSize(is(3)));
 	}
 	
