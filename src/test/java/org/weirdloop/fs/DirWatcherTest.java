@@ -1,6 +1,9 @@
 package org.weirdloop.fs;
 
 import java.io.File;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import org.apache.commons.io.filefilter.PrefixFileFilter;
 import org.junit.Test;
 
@@ -22,7 +25,7 @@ public class DirWatcherTest {
 	@Test
 	public void should_return_sensor_list() {
 		DirWatcher dw = new DirWatcher(new File("src/test/resources"), filter());
-		List<File> fnames = dw.lastModifiedFiles(hourAgo());
+		List<File> fnames = dw.lastModifiedFiles(hourAgo(), distinctByKey(f -> f.getName().substring(0, f.getName().indexOf('_'))));
 		List<String> ids = normalize(fnames);
 		assertThat(ids, containsInAnyOrder("1234", "2345", "4567"));
 	}
@@ -43,5 +46,10 @@ public class DirWatcherTest {
 		Date from = Date.from(Instant.now().minus(60, ChronoUnit.MINUTES));
 		return lastModifiedFile -> new Date(lastModifiedFile.getModifiedTime()).before(from);
 	}
-	
+
+	public static <T> Predicate<T> distinctByKey(Function<? super T,Object> keyExtractor) {
+		Map<Object,Boolean> seen = new ConcurrentHashMap<>();
+		return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+	}
 }
+
