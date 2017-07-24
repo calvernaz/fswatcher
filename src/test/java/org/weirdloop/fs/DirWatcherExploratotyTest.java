@@ -40,12 +40,12 @@ public class DirWatcherExploratotyTest {
 	public void should_detect_last_modified_files_hour_ago() {
 		LastModifiedFiles lmf = lastModifiedFiles(prefixFilter());
 		List<File> sensorids = lmf.modifiedAfter(hourAgo());
-		assertThat(sensorids, IsIterableWithSize.iterableWithSize(is(3)));
+		assertThat(sensorids, iterableWithSize(is(0)));
 	}
 	
 	private Predicate<LastModifiedFile> hourAgo() {
 		Date from = Date.from(Instant.now().minus(60, ChronoUnit.MINUTES));
-		return lastModifiedFile -> new Date(lastModifiedFile.getModifiedTime()).before(from);
+		return lastModifiedFile -> new Date(lastModifiedFile.getModifiedTime()).after(from);
 	}
 	
 	private LastModifiedFiles lastModifiedFiles(File[] files) {
