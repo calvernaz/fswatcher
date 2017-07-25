@@ -1,6 +1,8 @@
 package org.weirdloop.fs;
 
 
+import static java.util.stream.Collectors.toList;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
@@ -9,9 +11,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
-
-import static java.util.Objects.requireNonNull;
-import static java.util.stream.Collectors.toList;
 
 public class DirWatcher {
 
@@ -23,7 +22,7 @@ public class DirWatcher {
     this.filter = filter;
   }
 
-  public List<File> lastModifiedFiles(Predicate<File> unique) {
+  public List<File> recentModifiedFiles(Predicate<File> unique) {
     if (Objects.isNull(unique)) {
       return listFilteredFiles();
     }
@@ -32,7 +31,7 @@ public class DirWatcher {
 
   private List<File> oneOfEachFilteredFile(Predicate<File> pred) {
     return listFilteredFiles().stream()
-        .sorted(Comparator.comparingLong(File::lastModified))
+        .sorted(Comparator.comparingLong(File::lastModified).reversed())
         .filter(pred)
         .collect(toList());
 

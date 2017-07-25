@@ -6,9 +6,6 @@ import static org.junit.Assert.assertThat;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,7 +23,7 @@ public class DirWatcherTest {
   public void should_return_sensor_list() {
     DirWatcher dw = new DirWatcher(new File("src/test/resources"), filter());
     List<File> fnames = dw
-        .lastModifiedFiles(distinctByKey(f -> f.getName().substring(0, f.getName().indexOf('_'))));
+        .recentModifiedFiles(distinctByKey(f -> f.getName().substring(0, f.getName().indexOf('_'))));
     List<String> ids = normalize(fnames);
     assertThat(ids, containsInAnyOrder("1234", "2345", "4567"));
   }
@@ -35,7 +32,7 @@ public class DirWatcherTest {
   public void should_return_last_modified_file() {
     DirWatcher dirWatcher = new DirWatcher(new File("src/test/resources"), a1234_filter());
     List<File> fnames = dirWatcher
-        .lastModifiedFiles(distinctByKey(f -> f.getName().substring(0, f.getName().indexOf('_'))));
+        .recentModifiedFiles(distinctByKey(f -> f.getName().substring(0, f.getName().indexOf('_'))));
     assertThat(fnames.get(0).getName(), StringContains.containsString("1234_12345465645.csv"));
   }
 
