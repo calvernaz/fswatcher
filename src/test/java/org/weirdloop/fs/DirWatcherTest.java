@@ -33,7 +33,7 @@ public class DirWatcherTest {
     DirWatcher dirWatcher = new DirWatcher(new File("src/test/resources"), a1234_filter());
     List<File> fnames = dirWatcher
         .recentModifiedFiles(distinctByKey(f -> f.getName().substring(0, f.getName().indexOf('_'))));
-    assertThat(fnames.get(0).getName(), StringContains.containsString("1234_12345465645.csv"));
+    assertThat(fnames.get(0).getName(), StringContains.containsString("1234_12345465640.csv"));
   }
 
   private FileFilter a1234_filter() {
