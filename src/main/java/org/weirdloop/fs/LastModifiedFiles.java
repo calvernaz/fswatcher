@@ -12,13 +12,13 @@ public class LastModifiedFiles implements Iterable<LastModifiedFile> {
 	public LastModifiedFiles(List<LastModifiedFile> modifiedFiles) {
 		this.lastModifiedFiles = modifiedFiles;
 	}
-	
+
 	@Override
 	public Iterator<LastModifiedFile> iterator() {
 		return lastModifiedFiles.iterator();
 	}
 	
-	public List<File> modifiedAfter(Predicate<LastModifiedFile> pred) {
+	public List<File> apply(Predicate<LastModifiedFile> pred) {
 		return lastModifiedFiles.stream()
 				.filter(pred)
 				.map(LastModifiedFile::getFile)

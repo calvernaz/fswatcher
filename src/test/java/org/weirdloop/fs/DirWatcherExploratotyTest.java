@@ -1,7 +1,6 @@
 package org.weirdloop.fs;
 
 import org.apache.commons.io.filefilter.PrefixFileFilter;
-import org.hamcrest.collection.IsIterableWithSize;
 import org.junit.Test;
 
 import java.io.File;
@@ -39,7 +38,7 @@ public class DirWatcherExploratotyTest {
 	@Test
 	public void should_detect_last_modified_files_hour_ago() {
 		LastModifiedFiles lmf = lastModifiedFiles(prefixFilter());
-		List<File> sensorids = lmf.modifiedAfter(hourAgo());
+		List<File> sensorids = lmf.apply(hourAgo());
 		assertThat(sensorids, iterableWithSize(is(0)));
 	}
 	
