@@ -18,7 +18,7 @@ import static org.hamcrest.collection.IsIterableWithSize.iterableWithSize;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 
-public class DirScannerExploratotyTest {
+public class DirScannerExploratoryTest {
 	
 	@Test
 	public void should_filter_files_with_prefix() {
