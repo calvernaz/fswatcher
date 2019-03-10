@@ -54,12 +54,12 @@ public class DirScannerExploratoryTest {
 	}
 	
 	private File[] prefixFilter() {
-		FileFilter filter = new PrefixFileFilter(prefixedSensors());
+		FileFilter filter = new PrefixFileFilter(prefixedFilenames());
 		File file = new File("src/test/resources");
 		return file.listFiles(filter);
 	}
 	
-	private List<String> prefixedSensors() {
+	private List<String> prefixedFilenames() {
 		return Stream.of("1234", "2345", "4567").map(s -> String.format("%s_", s)).collect(toList());
 	}
 }

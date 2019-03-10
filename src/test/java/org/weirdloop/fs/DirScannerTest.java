@@ -29,14 +29,22 @@ public class DirScannerTest {
   }
   
   @Test
-  public void should_return_sensor_list() throws IOException {
+  public void should_return_distinct_list() throws IOException {
     DirScanner dw = new DirScanner(new File("src/test/resources"), filter());
     List<File> fnames = dw
         .recentModifiedFiles(distinctByKey(f -> f.getName().substring(0, f.getName().indexOf('_'))));
     List<String> ids = normalize(fnames);
     assertThat(ids, containsInAnyOrder("1234", "2345", "4567"));
   }
-
+  
+  @Test
+  public void should_return_non_distinct_list() throws IOException {
+    DirScanner dw = new DirScanner(new File("src/test/resources"), filter());
+    List<File> fnames = dw.recentModifiedFiles();
+    List<String> ids = normalize(fnames);
+    assertThat(ids, containsInAnyOrder("1234", "2345", "4567", "1234"));
+  }
+  
   @Test
   public void should_return_last_modified_file() throws IOException {
     DirScanner dirScanner = new DirScanner(new File("src/test/resources"), a1234_filter());
@@ -55,10 +63,10 @@ public class DirScannerTest {
   }
 
   private FileFilter filter() {
-    return new PrefixFileFilter(prefixedSensors());
+    return new PrefixFileFilter(prefixedFilenames());
   }
 
-  private List<String> prefixedSensors() {
+  private List<String> prefixedFilenames() {
     return Stream.of("1234", "2345", "4567").map(s -> String.format("%s_", s)).collect(toList());
   }
 
