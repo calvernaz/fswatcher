@@ -18,9 +18,9 @@ public class LastModifiedFiles implements Iterable<LastModifiedFile> {
 		return lastModifiedFiles.iterator();
 	}
 	
-	public List<File> apply(Predicate<LastModifiedFile> pred) {
+	public List<File> apply(Predicate<LastModifiedFile> predicate) {
 		return lastModifiedFiles.stream()
-				.filter(pred)
+				.filter(predicate)
 				.map(LastModifiedFile::getFile)
 				.collect(Collectors.toList());
 	}

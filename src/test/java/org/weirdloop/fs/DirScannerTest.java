@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,13 +16,21 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.io.filefilter.PrefixFileFilter;
 import org.hamcrest.core.StringContains;
+import org.junit.Before;
 import org.junit.Test;
 
-public class DirWatcherTest {
-
+public class DirScannerTest {
+  
+  static Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+  
+  @Before
+  public void setup() {
+    seen.clear();
+  }
+  
   @Test
-  public void should_return_sensor_list() {
-    DirWatcher dw = new DirWatcher(new File("src/test/resources"), filter());
+  public void should_return_sensor_list() throws IOException {
+    DirScanner dw = new DirScanner(new File("src/test/resources"), filter());
     List<File> fnames = dw
         .recentModifiedFiles(distinctByKey(f -> f.getName().substring(0, f.getName().indexOf('_'))));
     List<String> ids = normalize(fnames);
@@ -29,9 +38,9 @@ public class DirWatcherTest {
   }
 
   @Test
-  public void should_return_last_modified_file() {
-    DirWatcher dirWatcher = new DirWatcher(new File("src/test/resources"), a1234_filter());
-    List<File> fnames = dirWatcher
+  public void should_return_last_modified_file() throws IOException {
+    DirScanner dirScanner = new DirScanner(new File("src/test/resources"), a1234_filter());
+    List<File> fnames = dirScanner
         .recentModifiedFiles(distinctByKey(f -> f.getName().substring(0, f.getName().indexOf('_'))));
     assertThat(fnames.get(0).getName(), StringContains.containsString("1234_12345465640.csv"));
   }
@@ -54,7 +63,6 @@ public class DirWatcherTest {
   }
 
   public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
-    Map<Object, Boolean> seen = new ConcurrentHashMap<>();
     return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
   }
 }
