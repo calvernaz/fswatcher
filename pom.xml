@@ -82,50 +82,54 @@
     </dependency>
   </dependencies>
 
+  <distributionManagement>
+    <repository>
+      <id>central</id>
+      <name>livesense-artifactory-primary-0-releases</name>
+      <url>https://livesense.jfrog.io/artifactory/libs-release</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <name>livesense-artifactory-primary-0-snapshots</name>
+      <url>https://livesense.jfrog.io/artifactory/libs-release</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <repositories>
     <repository>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
       <id>central</id>
-      <name>libs-release</name>
-      <url>http://archiva.livesense.com.au/artifactory/libs-release</url>
+      <name>libs-release-local</name>
+      <url>https://livesense.jfrog.io/artifactory/libs-release</url>
     </repository>
     <repository>
       <snapshots/>
       <id>snapshots</id>
-      <name>libs-snapshot</name>
-      <url>http://archiva.livesense.com.au/artifactory/libs-snapshot</url>
+      <name>libs-release-local</name>
+      <url>https://livesense.jfrog.io/artifactory/libs-release-local</url>
+    </repository>
+    <repository>
+      <id>jcenter</id>
+      <url>https://livesense.jfrog.io/artifactory/JCenter-cache</url>
     </repository>
   </repositories>
 
   <pluginRepositories>
-    <pluginRepository>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <id>central</id>
-      <name>plugins-release</name>
-      <url>http://archiva.livesense.com.au/artifactory/plugins-release</url>
-    </pluginRepository>
-    <pluginRepository>
-      <snapshots/>
-      <id>snapshots</id>
-      <name>plugins-snapshot</name>
-      <url>http://archiva.livesense.com.au/artifactory/plugins-snapshot</url>
-    </pluginRepository>
+  <pluginRepository>
+    <snapshots>
+      <enabled>false</enabled>
+    </snapshots>
+    <id>central</id>
+    <name>plugins-release</name>
+    <url>https://livesense.jfrog.io/artifactory/plugins-release</url>
+  </pluginRepository>
+  <pluginRepository>
+    <snapshots/>
+    <id>snapshots</id>
+    <name>plugins-snapshot</name>
+    <url>https://livesense.jfrog.io/artifactory/plugins-snapshot</url>
+  </pluginRepository>
   </pluginRepositories>
-
-  <distributionManagement>
-    <repository>
-      <id>central</id>
-      <name>ac7831b73992-releases</name>
-      <url>http://archiva.livesense.com.au/artifactory/libs-release-local</url>
-    </repository>
-    <snapshotRepository>
-      <id>snapshots</id>
-      <name>ac7831b73992-snapshots</name>
-      <url>http://archiva.livesense.com.au/artifactory/libs-snapshot-local</url>
-    </snapshotRepository>
-  </distributionManagement>
 </project>
